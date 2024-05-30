@@ -8,6 +8,8 @@ app = Flask(__name__)
 app.config.from_object('config.Config')
 db = SQLAlchemy(app)
 
+
+#Criando modelos SQLite
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fullname = db.Column(db.String(150), nullable=False)
@@ -43,6 +45,8 @@ class RevenueType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
 
+
+#Rotas Flask
 @app.route('/')
 def index():
     return redirect(url_for('login'))
@@ -151,6 +155,8 @@ def add_revenue_type():
     db.session.commit()
     return redirect(url_for('dashboard'))
 
+
+#Debug flask
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
