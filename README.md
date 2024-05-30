@@ -64,69 +64,6 @@ Ainda está em fase de testes e desenvolvimento.
 
 5. Abra o navegador e acesse `http://127.0.0.1:5000`.
 
-## Estrutura do Projeto
-
-Claro! Um README bem estruturado ajuda muito na hora de compartilhar o projeto no GitHub. Aqui está um exemplo de README que você pode usar e ajustar conforme necessário:
-
-markdown
-Copiar código
-# Controle Financeiro
-
-Este é um aplicativo web de controle financeiro desenvolvido com Flask. Ele permite que os usuários gerenciem suas finanças, incluindo o registro de despesas, receitas, tipos de despesas e receitas, além de manter um histórico de transações.
-
-## Funcionalidades
-
-- Registro de Usuário
-- Login de Usuário
-- Gerenciamento de Carteira Financeira
-- Cadastro de Despesas
-- Cadastro de Receitas
-- Cadastro de Tipos de Despesas
-- Cadastro de Tipos de Receitas
-- Visualização do Histórico de Transações
-
-## Tecnologias Utilizadas
-
-- Python
-- Flask
-- Flask-SQLAlchemy
-- Werkzeug
-- HTML/CSS
-- SQLite
-
-## Instalação
-
-### Pré-requisitos
-
-- Python 3.x instalado
-- Virtualenv (opcional, mas recomendado)
-
-### Passos para instalação
-
-1. Clone o repositório:
-    ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
-    cd seu-repositorio
-    ```
-
-2. Crie um ambiente virtual e ative-o:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # No Windows use `venv\Scripts\activate`
-    ```
-
-3. Instale as dependências:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. Execute a aplicação:
-    ```bash
-    python app.py
-    ```
-
-5. Abra o navegador e acesse `http://127.0.0.1:5000`.
-
 ## Uso
 
 ### Registro de Usuário
