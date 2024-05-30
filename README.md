@@ -9,6 +9,7 @@ Ainda está em fase de testes e desenvolvimento.
 ## Últimas atualizações:
 
 - Gráficos de Despesas - Implementar gráficos para visualização das despesas ao longo do tempo
+- Adicionado página de configuração, onde será possível alterar dados cadastrais e tipos de despesas e receitas.
 
 ## Próximas atualizações
 
