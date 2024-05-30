@@ -127,18 +127,6 @@ Este é um aplicativo web de controle financeiro desenvolvido com Flask. Ele per
 
 5. Abra o navegador e acesse `http://127.0.0.1:5000`.
 
-## Estrutura do Projeto
-.
-├── app.py
-├── config.py
-├── requirements.txt
-├── templates
-│ ├── dashboard.html
-│ ├── login.html
-│ ├── register.html
-└── README.md
-
-
 ## Uso
 
 ### Registro de Usuário
