@@ -119,13 +119,29 @@ def dashboard():
         return redirect(url_for('login'))
     
     wallet = Wallet.query.first()
-    expense_types = ExpenseType.query.all()
-    revenue_types = RevenueType.query.all()
     total_revenue = db.session.query(db.func.sum(Revenue.amount)).scalar() or 0
     total_expense = db.session.query(db.func.sum(Expense.amount)).scalar() or 0
     total_value = total_revenue - total_expense
     
-    return render_template('dashboard.html', wallet=wallet, total_value=total_value, total_expense=total_expense, expense_types=expense_types, revenue_types=revenue_types)
+    # Calcular dados para o gráfico
+    expense_types = ExpenseType.query.all()
+    revenue_types = RevenueType.query.all()
+    
+    expense_data = {expense_type.name: 0 for expense_type in expense_types}
+    revenue_data = {revenue_type.name: 0 for revenue_type in revenue_types}
+    
+    for expense in Expense.query.all():
+        expense_type = ExpenseType.query.get(expense.expense_type_id)
+        expense_data[expense_type.name] += expense.amount
+        
+    for revenue in Revenue.query.all():
+        revenue_type = RevenueType.query.get(revenue.revenue_type_id)
+        revenue_data[revenue_type.name] += revenue.amount
+
+    labels = list(expense_data.keys()) + list(revenue_data.keys())
+    data = list(expense_data.values()) + list(revenue_data.values())
+    
+    return render_template('dashboard.html', wallet=wallet, total_value=total_value, total_expense=total_expense, labels=labels, data=data)
 
 @app.route('/add_wallet', methods=['POST'])
 def add_wallet():
