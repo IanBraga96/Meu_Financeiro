@@ -1,15 +1,21 @@
-from flask import Flask, request, render_template, redirect, url_for, flash, session
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
-import os
-
-app = Flask(__name__)
-app.config.from_object('config.Config')
-db = SQLAlchemy(app)
+#imports
+from flask import Flask, request, render_template, redirect, url_for, flash, session #Framework para criar aplicações web em Python.
+from flask_sqlalchemy import SQLAlchemy #ORM para interagir com bancos de dados.
+from werkzeug.security import generate_password_hash, check_password_hash #Funções para criptografar e verificar senhas.
+from datetime import datetime #Módulo para trabalhar com datas e horas.
+import os #Módulo para interagir com o sistema operacional.
 
 
-#Criando modelos SQLite
+#Configuração do Flask e banco de dados SQLAlchemy
+app = Flask(__name__) #Cria uma instância do Flask.
+app.config.from_object('config.Config') # Configura o aplicativo Flask com base em um arquivo de configuração.
+db = SQLAlchemy(app) # Cria uma instância do SQLAlchemy e associa ao aplicativo Flask.
+
+
+#Definição de modelos de banco de dados:
+#Define quatro modelos de banco de dados: User, Wallet, Expense, Revenue, ExpenseType,
+#RevenueType, representando usuários, carteiras, despesas, receitas, tipos de despesa
+#e tipos de receita, respectivamente. Cada modelo é uma classe que herda da classe db.Model do SQLAlchemy.
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fullname = db.Column(db.String(150), nullable=False)
@@ -46,7 +52,16 @@ class RevenueType(db.Model):
     name = db.Column(db.String(100), unique=True, nullable=False)
 
 
-#Rotas Flask
+#Define várias rotas para o Flask
+#@app.route('/'): Rota principal que redireciona para o login.
+#@app.route('/register', methods=['GET', 'POST']): Rota para registrar um novo usuário.
+#@app.route('/login', methods=['GET', 'POST']): Rota para fazer login.
+#@app.route('/dashboard'): Rota para o painel de controle, acessível apenas se o usuário estiver logado.
+#@app.route('/add_wallet', methods=['POST']): Rota para adicionar ou atualizar informações da carteira.
+#@app.route('/add_expense', methods=['POST']): Rota para adicionar uma nova despesa.
+#@app.route('/add_revenue', methods=['POST']): Rota para adicionar uma nova receita.
+#@app.route('/add_expense_type', methods=['POST']): Rota para adicionar um novo tipo de despesa.
+#@app.route('/add_revenue_type', methods=['POST']): Rota para adicionar um novo tipo de receita.
 @app.route('/')
 def index():
     return redirect(url_for('login'))
@@ -166,5 +181,5 @@ def add_revenue_type():
 #Debug flask
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+        db.create_all() #Cria as tabelas no banco de dados.
+    app.run(debug=True) #Executa o Flask em modo de depuração.
