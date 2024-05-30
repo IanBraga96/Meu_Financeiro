@@ -119,6 +119,8 @@ def dashboard():
         return redirect(url_for('login'))
     
     wallet = Wallet.query.first()
+    expense_types = ExpenseType.query.all()
+    revenue_types = RevenueType.query.all()
     total_revenue = db.session.query(db.func.sum(Revenue.amount)).scalar() or 0
     total_expense = db.session.query(db.func.sum(Expense.amount)).scalar() or 0
     total_value = total_revenue - total_expense
@@ -140,8 +142,13 @@ def dashboard():
 
     labels = list(expense_data.keys()) + list(revenue_data.keys())
     data = list(expense_data.values()) + list(revenue_data.values())
+
+    expenses = Expense.query.all()
+    revenues = Revenue.query.all()
     
-    return render_template('dashboard.html', wallet=wallet, total_value=total_value, total_expense=total_expense, labels=labels, data=data)
+    return render_template('dashboard.html', wallet=wallet, total_value=total_value,
+                           total_expense=total_expense, labels=labels, data=data, expense_types=expense_types,
+                           revenue_types=revenue_types, expenses=expenses, revenues=revenues)
 
 @app.route('/add_wallet', methods=['POST'])
 def add_wallet():
@@ -192,6 +199,66 @@ def add_revenue_type():
     db.session.add(new_revenue_type)
     db.session.commit()
     return redirect(url_for('dashboard'))
+
+@app.route('/config', methods=['GET', 'POST'])
+def config():
+    if 'user_id' not in session:
+        flash('Por favor, faça login para acessar essa página.', 'warning')
+        return redirect(url_for('login'))
+
+    user = User.query.get(session['user_id'])
+    expense_types = ExpenseType.query.all()
+    revenue_types = RevenueType.query.all()
+
+    if request.method == 'POST':
+        # Atualizar dados do usuário
+        user.fullname = request.form.get('fullname')
+        user.email = request.form.get('email')
+        db.session.commit()
+        flash('Dados atualizados com sucesso!', 'success')
+    
+    return render_template('config.html', user=user, expense_types=expense_types, revenue_types=revenue_types)
+
+@app.route('/delete_expense_type/<int:id>')
+def delete_expense_type(id):
+    expense_type = ExpenseType.query.get(id)
+    db.session.delete(expense_type)
+    db.session.commit()
+    flash('Tipo de despesa excluído com sucesso!', 'success')
+    return redirect(url_for('config'))
+
+@app.route('/delete_revenue_type/<int:id>')
+def delete_revenue_type(id):
+    revenue_type = RevenueType.query.get(id)
+    db.session.delete(revenue_type)
+    db.session.commit()
+    flash('Tipo de receita excluído com sucesso!', 'success')
+    return redirect(url_for('config'))
+
+@app.route('/change_password', methods=['POST'])
+def change_password():
+    if 'user_id' not in session:
+        flash('Por favor, faça login para acessar essa página.', 'warning')
+        return redirect(url_for('login'))
+    
+    user = User.query.get(session['user_id'])
+    current_password = request.form.get('current_password')
+    new_password = request.form.get('new_password')
+    confirm_new_password = request.form.get('confirm_new_password')
+    
+    if not check_password_hash(user.password, current_password):
+        flash('Senha atual incorreta.', 'danger')
+        return redirect(url_for('config'))
+    
+    if new_password != confirm_new_password:
+        flash('As novas senhas não coincidem.', 'danger')
+        return redirect(url_for('config'))
+    
+    user.password = generate_password_hash(new_password, method='pbkdf2:sha256')
+    db.session.commit()
+    flash('Senha alterada com sucesso!', 'success')
+    return redirect(url_for('config'))
+
 
 
 #Debug flask
