@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Financeiro</title>
+    <title>Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,6 +24,14 @@
         }
         h2 {
             margin-bottom: 10px;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chart {
+            width: 50%;
         }
         table {
             width: 100%;
@@ -57,16 +65,24 @@
             background-color: #0056b3;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="section">
-            <h2>&nbsp;</h2>
-            <h1 style="text-align: center;"><img src="https://img.freepik.com/vetores-premium/carteira-de-couro-isolada-com-cartao-de-credito-em-branco-em-estilo-simples-imagem-vetorial_523792-286.jpg?w=740" alt="" width="64" height="51" /><strong>Meu Financeiro</strong></h1>
-            <h2>&nbsp;</h2>
-            <h2>Valor Geral da Carteira</h2>
-            <p><strong>Valor Total:</strong> R$ {{ total_value }}</p>
-            <p><strong>Total de Gastos:</strong> R$ {{ total_expense }}</p>
+            <div class="chart-container">
+                <div>
+                    <h2>&nbsp;</h2>
+                    <h1 style="text-align: center;"><img src="https://img.freepik.com/vetores-premium/carteira-de-couro-isolada-com-cartao-de-credito-em-branco-em-estilo-simples-imagem-vetorial_523792-286.jpg?w=740" alt="" width="64" height="51" /><strong>Meu Financeiro</strong></h1>
+                    <h2>&nbsp;</h2>
+                    <h2>Valor Geral da Carteira</h2>
+                    <p><strong>Valor Total:</strong> R$ {{ total_value }}</p>
+                    <p><strong>Total de Gastos:</strong> R$ {{ total_expense }}</p>
+                </div>
+                <div class="chart">
+                    <canvas id="expenseRevenueChart"></canvas>
+                </div>
+            </div>
         </div>
 
         <div class="section">
@@ -85,7 +101,6 @@
                 <button type="submit">Adicionar Despesa</button>
             </form>
         </div>
-
         <div class="section">
             <h2>Cadastro de Receitas</h2>
             <form action="/add_revenue" method="POST">
@@ -102,7 +117,6 @@
                 <button type="submit">Adicionar Receita</button>
             </form>
         </div>
-
         <div class="section">
             <h2>Cadastro de Tipos de Despesas</h2>
             <form action="/add_expense_type" method="POST">
@@ -111,7 +125,6 @@
                 <button type="submit">Adicionar Tipo de Despesa</button>
             </form>
         </div>
-
         <div class="section">
             <h2>Cadastro de Tipos de Receitas</h2>
             <form action="/add_revenue_type" method="POST">
@@ -120,7 +133,6 @@
                 <button type="submit">Adicionar Tipo de Receita</button>
             </form>
         </div>
-
         <div class="section">
             <h2>Histórico de Transações</h2>
             <table>
@@ -149,5 +161,47 @@
             </table>
         </div>
     </div>
+    <script>
+        const ctx = document.getElementById('expenseRevenueChart').getContext('2d');
+        const expenseRevenueChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels|safe }},
+                datasets: [{
+                    label: 'Despesas e Receitas',
+                    data: {{ data|safe }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Tipos de Despesas e Receitas'
+                    }
+                }
+            },
+        });
+    </script>
 </body>
 </html>
