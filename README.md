@@ -5,10 +5,15 @@ Este é um aplicativo web bem simples de controle financeiro desenvolvido com Py
 A intenção da criação é de uma necessidade pessoal para organizar os gastos.
 Ainda está em fase de testes e desenvolvimento.
 
+
+## Últimas atualizações:
+
+- Gráficos de Despesas - Implementar gráficos para visualização das despesas ao longo do tempo
+
 ## Próximas atualizações
 
 - Remodelação da Dashboard - Melhorar a experiência de uso da dashboard, tornando-a mais intuitiva e amigável.
-- Gráficos de Despesas - Implementar gráficos para visualização das despesas ao longo do tempo
+- Gráficos de Despesas - Implementar gráficos para visualização das despesas ao longo do tempo ✅
 - Disponibilização Online - Hospedar o aplicativo online para uso externo, Garantir que seja responsivo e funcione bem em smartphones e tablets.
 
 ## Funcionalidades
