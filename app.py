@@ -104,18 +104,25 @@ def dashboard():
         return redirect(url_for('login'))
     
     wallet = Wallet.query.first()
-    expenses = Expense.query.all()
-    revenues = Revenue.query.all()
     expense_types = ExpenseType.query.all()
     revenue_types = RevenueType.query.all()
-    return render_template('dashboard.html', wallet=wallet, expenses=expenses, revenues=revenues, expense_types=expense_types, revenue_types=revenue_types)
+    total_revenue = db.session.query(db.func.sum(Revenue.amount)).scalar() or 0
+    total_expense = db.session.query(db.func.sum(Expense.amount)).scalar() or 0
+    total_value = total_revenue - total_expense
+    
+    return render_template('dashboard.html', wallet=wallet, total_value=total_value, total_expense=total_expense, expense_types=expense_types, revenue_types=revenue_types)
 
 @app.route('/add_wallet', methods=['POST'])
 def add_wallet():
     total_value = request.form.get('total_value')
     total_expenses = request.form.get('total_expenses')
-    new_wallet = Wallet(total_value=total_value, total_expenses=total_expenses)
-    db.session.add(new_wallet)
+    wallet = Wallet.query.first()
+    if wallet:
+        wallet.total_value = total_value
+        wallet.total_expenses = total_expenses
+    else:
+        new_wallet = Wallet(total_value=total_value, total_expenses=total_expenses)
+        db.session.add(new_wallet)
     db.session.commit()
     return redirect(url_for('dashboard'))
 
