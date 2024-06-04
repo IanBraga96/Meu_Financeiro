@@ -15,6 +15,7 @@ Ainda está em fase de testes e desenvolvimento.
 ## Próximas atualizações
 
 - Remodelação da Dashboard - Melhorar a experiência de uso da dashboard, tornando-a mais intuitiva e amigável.
+- Adicionar reCAPTCHA no login
 - Gráficos de Despesas - Implementar gráficos para visualização das despesas ao longo do tempo ✅
 - Disponibilização Online - Hospedar o aplicativo online para uso externo, Garantir que seja responsivo e funcione bem em smartphones e tablets.
 
