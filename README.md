@@ -8,6 +8,7 @@ Ainda está em fase de testes e desenvolvimento.
 
 ## Últimas atualizações:
 
+- Identifiquei um problema no banco de dados em que as alterações não estavam sendo separadas por usuário. As correções necessárias e o problema foi resolvido.
 - Gráficos de Despesas - Implementar gráficos para visualização das despesas ao longo do tempo
 - Adicionado página de configuração, onde será possível alterar dados cadastrais e tipos de despesas e receitas.
 
