@@ -17,6 +17,7 @@ db = SQLAlchemy(app) # Cria uma instância do SQLAlchemy e associa ao aplicativo
 #RevenueType, representando usuários, carteiras, despesas, receitas, tipos de despesa
 #e tipos de receita, respectivamente. Cada modelo é uma classe que herda da classe db.Model do SQLAlchemy.
 class User(db.Model):
+    # Modelo de usuário com campos para fullname, username, email e password
     id = db.Column(db.Integer, primary_key=True)
     fullname = db.Column(db.String(150), nullable=False)
     username = db.Column(db.String(150), unique=True, nullable=False)
@@ -24,6 +25,7 @@ class User(db.Model):
     password = db.Column(db.String(150), nullable=False)
 
 class Wallet(db.Model):
+    # Modelo de carteira
     id = db.Column(db.Integer, primary_key=True)
     total_value = db.Column(db.Float, nullable=False)
     total_expenses = db.Column(db.Float, nullable=False)
@@ -31,6 +33,7 @@ class Wallet(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Expense(db.Model):
+    # Modelo de despesa
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(200))
@@ -39,6 +42,7 @@ class Expense(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Revenue(db.Model):
+    # Modelo de receitas
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(200))
@@ -47,11 +51,13 @@ class Revenue(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class ExpenseType(db.Model):
+    # Modelo de tipos de despesa
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 class RevenueType(db.Model):
+    # Modelo de tipos de receitas
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -252,19 +258,39 @@ def config():
 
 @app.route('/delete_expense_type/<int:id>')
 def delete_expense_type(id):
-    expense_type = ExpenseType.query.get(id)
-    db.session.delete(expense_type)
+    if 'user_id' not in session:
+        flash('Por favor, faça login para excluir uma despesa.', 'warning')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    expense = Expense.query.get(id)
+
+    if expense is None or expense.user_id!= user_id:
+        flash('Você não tem permissão para excluir essa despesa.', 'danger')
+        return redirect(url_for('dashboard'))
+
+    db.session.delete(expense)
     db.session.commit()
-    flash('Tipo de despesa excluído com sucesso!', 'success')
-    return redirect(url_for('config'))
+    flash('Despesa excluída com sucesso!', 'uccess')
+    return redirect(url_for('dashboard'))
 
 @app.route('/delete_revenue_type/<int:id>')
 def delete_revenue_type(id):
-    revenue_type = RevenueType.query.get(id)
-    db.session.delete(revenue_type)
+    if 'user_id' not in session:
+        flash('Por favor, faça login para excluir uma receita.', 'warning')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    revenue = Revenue.query.get(id)
+
+    if revenue is None or revenue.user_id!= user_id:
+        flash('Você não tem permissão para excluir essa receita.', 'danger')
+        return redirect(url_for('dashboard'))
+
+    db.session.delete(revenue)
     db.session.commit()
-    flash('Tipo de receita excluído com sucesso!', 'success')
-    return redirect(url_for('config'))
+    flash('Receita excluída com sucesso!', 'uccess')
+    return redirect(url_for('dashboard'))
 
 @app.route('/change_password', methods=['POST'])
 def change_password():
