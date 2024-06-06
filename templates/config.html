@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações</title>
     <style>
+        header {
+            background-color: #ffffff;
+            padding: 50px;
+        }
+        header h1{
+            margin: 0;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -56,10 +66,22 @@
         button:hover {
             background-color: #0056b3;
         }
+        .back-button {
+            background-color: #007BFF;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <header>
+            <h1>Configurações</h1>
+          </header>
+        <button class="back-button" onclick="window.location.href='{{ back_url }}'">Voltar para a Página Principal</button>
+        
         <div class="section">
             <h2>Dados do Usuário</h2>
             <form method="POST" action="{{ url_for('config') }}">
@@ -123,6 +145,54 @@
                     <td>{{ revenue_type.name }}</td>
                     <td>
                         <a href="{{ url_for('delete_revenue_type', id=revenue_type.id) }}">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Histórico de Despesas</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Data</th>
+                    <th>Ações</th>
+                </tr>
+                {% for expense in expenses %}
+                <tr>
+                    <td>{{ expense.id }}</td>
+                    <td>{{ expense.description }}</td>
+                    <td>{{ expense.amount }}</td>
+                    <td>{{ expense.created_at.strftime('%d/%m/%Y') }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_expense', id=expense.id) }}">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Histórico de Receitas</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Data</th>
+                    <th>Ações</th>
+                </tr>
+                {% for revenue in revenues %}
+                <tr>
+                    <td>{{ revenue.id }}</td>
+                    <td>{{ revenue.description }}</td>
+                    <td>{{ revenue.amount }}</td>
+                    <td>{{ revenue.created_at.strftime('%d/%m/%Y') }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_revenue', id=revenue.id) }}">Excluir</a>
                     </td>
                 </tr>
                 {% endfor %}
