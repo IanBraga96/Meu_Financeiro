@@ -246,6 +246,10 @@ def config():
     user = User.query.get(user_id)
     expense_types = ExpenseType.query.all()
     revenue_types = RevenueType.query.all()
+    expenses = Expense.query.filter_by(user_id=user_id).all()
+    revenues = Revenue.query.filter_by(user_id=user_id).all()
+    back_url = url_for('dashboard')
+
 
     if request.method == 'POST':
         # Atualizar dados do usuário
@@ -254,10 +258,58 @@ def config():
         db.session.commit()
         flash('Dados atualizados com sucesso!', 'uccess')
     
-    return render_template('config.html', user=user, expense_types=expense_types, revenue_types=revenue_types)
+    return render_template('config.html', user=user, expense_types=expense_types, revenue_types=revenue_types, expenses=expenses, revenues=revenues, back_url=back_url)
 
 @app.route('/delete_expense_type/<int:id>')
 def delete_expense_type(id):
+    if 'user_id' not in session:
+        flash('Por favor, faça login para excluir um tipo de despesa.', 'warning')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    expense_type = ExpenseType.query.get(id)
+
+    if not expense_type or expense_type.user_id != user_id:
+        flash('Você não tem permissão para excluir esse tipo de despesa.', 'danger')
+        return redirect(url_for('config'))
+
+    # Verifica se existem despesas associadas a este tipo de despesa
+    associated_expenses = Expense.query.filter_by(expense_type_id=id).count()
+    if associated_expenses > 0:
+        flash('Não é possível excluir este tipo de despesa, pois existem despesas associadas a ele.', 'danger')
+        return redirect(url_for('config'))
+
+    db.session.delete(expense_type)
+    db.session.commit()
+    flash('Tipo de despesa excluído com sucesso!', 'success')
+    return redirect(url_for('config'))
+
+@app.route('/delete_revenue_type/<int:id>')
+def delete_revenue_type(id):
+    if 'user_id' not in session:
+        flash('Por favor, faça login para excluir um tipo de receita.', 'warning')
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    revenue_type = RevenueType.query.get(id)
+
+    if not revenue_type or revenue_type.user_id != user_id:
+        flash('Você não tem permissão para excluir esse tipo de receita.', 'danger')
+        return redirect(url_for('config'))
+
+    # Verifica se existem receitas associadas a este tipo de receita
+    associated_revenues = Revenue.query.filter_by(revenue_type_id=id).count()
+    if associated_revenues > 0:
+        flash('Não é possível excluir este tipo de receita, pois existem receitas associadas a ele.', 'danger')
+        return redirect(url_for('config'))
+
+    db.session.delete(revenue_type)
+    db.session.commit()
+    flash('Tipo de receita excluído com sucesso!', 'success')
+    return redirect(url_for('config'))
+
+@app.route('/delete_expense/<int:id>')
+def delete_expense(id):
     if 'user_id' not in session:
         flash('Por favor, faça login para excluir uma despesa.', 'warning')
         return redirect(url_for('login'))
@@ -265,17 +317,17 @@ def delete_expense_type(id):
     user_id = session['user_id']
     expense = Expense.query.get(id)
 
-    if expense is None or expense.user_id!= user_id:
+    if not expense or expense.user_id != user_id:
         flash('Você não tem permissão para excluir essa despesa.', 'danger')
         return redirect(url_for('dashboard'))
 
     db.session.delete(expense)
     db.session.commit()
-    flash('Despesa excluída com sucesso!', 'uccess')
-    return redirect(url_for('dashboard'))
+    flash('Despesa excluída com sucesso!', 'success')
+    return redirect(url_for('config'))
 
-@app.route('/delete_revenue_type/<int:id>')
-def delete_revenue_type(id):
+@app.route('/delete_revenue/<int:id>')
+def delete_revenue(id):
     if 'user_id' not in session:
         flash('Por favor, faça login para excluir uma receita.', 'warning')
         return redirect(url_for('login'))
@@ -283,14 +335,15 @@ def delete_revenue_type(id):
     user_id = session['user_id']
     revenue = Revenue.query.get(id)
 
-    if revenue is None or revenue.user_id!= user_id:
+    if not revenue or revenue.user_id != user_id:
         flash('Você não tem permissão para excluir essa receita.', 'danger')
         return redirect(url_for('dashboard'))
 
     db.session.delete(revenue)
     db.session.commit()
-    flash('Receita excluída com sucesso!', 'uccess')
-    return redirect(url_for('dashboard'))
+    flash('Receita excluída com sucesso!', 'success')
+    return redirect(url_for('config'))
+
 
 @app.route('/change_password', methods=['POST'])
 def change_password():
