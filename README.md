@@ -9,10 +9,12 @@ Ainda está em fase de testes e desenvolvimento.
 ## Últimas atualizações:
 
 - Identifiquei um problema no banco de dados em que as informações não estavam sendo separadas por usuário. As correções necessárias e o problema foi resolvido.
-- Gráficos de Despesas - Implementar gráficos para visualização das despesas ao longo do tempo
+- Gráficos de Despesas - Implementar gráficos para visualização das despesas ao longo do tempo.
 - Adicionado página de configuração, onde será possível alterar dados cadastrais e tipos de despesas e receitas.
 - Adicionado opção para excluir valores de despesas e receitas.
-- Alterações na página de configuração. (Adicionado campo para exclusão de valores de despesas/receitas e adicionado botão de voltar)
+- Alterações na página de configuração. (Adicionado campo para exclusão de valores de despesas/receitas e adicionado botão de voltar).
+- Modificações nas páginas, adicionado rodapé.
+- Separando html do css e javascript.
 
 ## Próximas atualizações
 
