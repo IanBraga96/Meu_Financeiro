@@ -1,13 +1,14 @@
 #imports
-from flask import Flask, request, render_template, redirect, url_for, flash, session #Framework para criar aplicações web em Python.
+from flask import Flask, request, render_template, redirect, url_for, flash, session, send_from_directory #Framework para criar aplicações web em Python.
 from flask_sqlalchemy import SQLAlchemy #ORM para interagir com bancos de dados.
 from werkzeug.security import generate_password_hash, check_password_hash #Funções para criptografar e verificar senhas.
 from datetime import datetime #Módulo para trabalhar com datas e horas.
 import os #Módulo para interagir com o sistema operacional.
+import json
 
 
 #Configuração do Flask e banco de dados SQLAlchemy
-app = Flask(__name__) #Cria uma instância do Flask.
+app = Flask(__name__, static_url_path='/static') #Cria uma instância do Flask.
 app.config.from_object('config.Config') # Configura o aplicativo Flask com base em um arquivo de configuração.
 db = SQLAlchemy(app) # Cria uma instância do SQLAlchemy e associa ao aplicativo Flask.
 
@@ -123,6 +124,7 @@ def login():
 
     return render_template('login.html')
 
+
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' not in session:
@@ -139,9 +141,6 @@ def dashboard():
     total_value = total_revenue - total_expense
     
     # Calcular dados para o gráfico
-    expense_types = ExpenseType.query.filter_by(user_id=user_id).all()
-    revenue_types = RevenueType.query.filter_by(user_id=user_id).all()
-    
     expense_data = {expense_type.name: 0 for expense_type in expense_types}
     revenue_data = {revenue_type.name: 0 for revenue_type in revenue_types}
     
@@ -156,12 +155,17 @@ def dashboard():
     labels = list(expense_data.keys()) + list(revenue_data.keys())
     data = list(expense_data.values()) + list(revenue_data.values())
 
+    # Convertendo os dados para JSON após defini-los
+    labels_json = json.dumps(labels)
+    data_json = json.dumps(data)
+
     expenses = Expense.query.filter_by(user_id=user_id).all()
     revenues = Revenue.query.filter_by(user_id=user_id).all()
     
     return render_template('dashboard.html', wallet=wallet, total_value=total_value,
                            total_expense=total_expense, labels=labels, data=data, expense_types=expense_types,
-                           revenue_types=revenue_types, expenses=expenses, revenues=revenues, user_id=user_id)
+                           revenue_types=revenue_types, expenses=expenses, revenues=revenues, user_id=user_id,
+                           labels_json=labels_json, data_json=data_json)
 
 @app.route('/add_wallet', methods=['POST'])
 def add_wallet():
