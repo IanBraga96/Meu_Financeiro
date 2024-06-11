@@ -4,79 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Financeiro</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header h1 {
-            margin: 0;
-            text-align: center;
-        }
-        .config-icon {
-            font-size: 24px;
-            color: #007BFF;
-            cursor: pointer;
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-        h2 {
-            margin-bottom: 10px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        input, select, button {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .chart {
-            width: 500px; /* Defina a largura desejada */
-            height: 300px; /* Defina a altura desejada */
-            margin: 0 auto;
-    </style>
-   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Renderizando os dados no script embutido no HTML
+        var labels = JSON.parse('{{ labels_json|safe }}');
+        var data = JSON.parse('{{ data_json|safe }}');
+    </script>
 </head>
 <body>
     <div class="container">
@@ -85,7 +20,6 @@
             <a href="{{ url_for('config') }}" class="config-icon"><i class="fas fa-cog"></i></a>
         </div>
         <div class="section">
-            <h2>&nbsp;</h2>
             <h2>Valor Geral da Carteira</h2>
             <p><strong>Valor Total:</strong> R$ {{ total_value }}</p>
             <p><strong>Total de Gastos:</strong> R$ {{ total_expense }}</p>
@@ -174,49 +108,9 @@
             </table>
         </div>
     </div>
-
-    
-    <script>
-        const ctx = document.getElementById('expenseRevenueChart').getContext('2d');
-        const expenseRevenueChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {{ labels|safe }},
-                datasets: [{
-                    label: 'Despesas e Receitas',
-                    data: {{ data|safe }},
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Tipos de Despesas e Receitas'
-                    }
-                }
-            },
-        });
-    </script>
-</body>
+    <footer>
+        <p>&copy; 2024 Ian Braga. Todos os direitos reservados. | Projeto Pessoal Meu_Financeiro</p>
+    </footer>
+    <script src="static/js/script.js"></script>
+    </body>
 </html>
