@@ -15,10 +15,8 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1><img src="https://img.freepik.com/vetores-premium/carteira-de-couro-isolada-com-cartao-de-credito-em-branco-em-estilo-simples-imagem-vetorial_523792-286.jpg?w=740" alt="" width="64" height="51" /><strong>Meu Financeiro</strong></h1>
-            <a href="{{ url_for('config') }}" class="config-icon"><i class="fas fa-cog"></i></a>
-        </div>
+        {% include 'base.html' %}
+        
         <div class="section">
             <h2>Valor Geral da Carteira</h2>
             <p><strong>Valor Total:</strong> R$ {{ total_value }}</p>
