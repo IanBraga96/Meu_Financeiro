@@ -15,6 +15,8 @@ Ainda está em fase de testes e desenvolvimento.
 - Alterações na página de configuração. (Adicionado campo para exclusão de valores de despesas/receitas e adicionado botão de voltar).
 - Modificações nas páginas, adicionado rodapé.
 - Separando html do css e javascript.
+- Modificações nas páginas, adicionado cabeçalho.
+- Adicionado modo escuro.
 
 ## Próximas atualizações
 
