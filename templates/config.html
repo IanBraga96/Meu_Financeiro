@@ -8,10 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Configurações</h1>
-        </header>
-        <button class="back-button" onclick="window.location.href='{{ back_url }}'">Voltar para a Página Principal</button>
+        {% include 'base.html' %}
         
         <div class="section">
             <h2>Dados do Usuário</h2>
@@ -133,5 +130,7 @@
     <footer>
         <p>&copy; 2024 Ian Braga. Todos os direitos reservados. | Projeto Pessoal Meu_Financeiro</p>
     </footer>
+    
+    <script src="static/js/script.js"></script>
 </body>
 </html>
