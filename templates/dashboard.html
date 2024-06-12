@@ -1,114 +1,133 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Financeiro</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Renderizando os dados no script embutido no HTML
-        var labels = JSON.parse('{{ labels_json|safe }}');
-        var data = JSON.parse('{{ data_json|safe }}');
-    </script>
-</head>
-<body>
-    <div class="container">
-        {% include 'base.html' %}
-        
-        <div class="section">
-            <h2>Valor Geral da Carteira</h2>
-            <p><strong>Valor Total:</strong> R$ {{ total_value }}</p>
-            <p><strong>Total de Gastos:</strong> R$ {{ total_expense }}</p>
-        </div>
-        <div class="chart">
-            <canvas id="expenseRevenueChart" width="200" height="100"></canvas>
-        </div>
+    <!-- Cabeçalho do documento HTML -->
+    <head>
+        <!-- Meta informações do documento -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Título da página -->
+        <title>Meu Financeiro</title>
+        <!-- Link para o arquivo de estilo CSS -->
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <!-- Link para o arquivo de estilo CSS do Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <!-- Script para o Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- Script para renderizar os dados no HTML -->
+        <script>
+            // Renderizando os dados no script embutido no HTML
+            var labels = JSON.parse('{{ labels_json|safe }}');
+            var data = JSON.parse('{{ data_json|safe }}');
+        </script>
+    </head>
+    <!-- Corpo da página HTML -->
+    <body>
+        <!-- Container principal da página -->
+        <div class="container">
+            <!-- Inclui o template cabeçalho base.html -->
+            {% include 'base.html' %}
+            
+            <!-- Seção para exibir o valor geral da carteira -->
+            <div class="section">
+                <h2>Valor Geral da Carteira</h2>
+                <p><strong>Valor Total:</strong> R$ {{ total_value }}</p>
+                <p><strong>Total de Gastos:</strong> R$ {{ total_expense }}</p>
+            </div>
+            <!-- Seção para exibir o gráfico de despesas e receitas -->
+            <div class="chart">
+                <canvas id="expenseRevenueChart" width="200" height="100"></canvas>
+            </div>
 
-        <div class="section">
-            <h2>Cadastro de Despesas</h2>
-            <form action="/add_expense" method="POST">
-                <label for="amount">Valor:</label>
-                <input type="number" step="0.01" id="amount" name="amount" required>
-                <label for="description">Descrição:</label>
-                <input type="text" id="description" name="description" required>
-                <label for="expense_type_id">Tipo de Despesa:</label>
-                <select id="expense_type_id" name="expense_type_id" required>
-                    {% for type in expense_types %}
-                        <option value="{{ type.id }}">{{ type.name }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Adicionar Despesa</button>
-            </form>
-        </div>
+            <!-- Seção para cadastrar despesas -->
+            <div class="section">
+                <h2>Cadastro de Despesas</h2>
+                <form action="/add_expense" method="POST">
+                    <label for="amount">Valor:</label>
+                    <input type="number" step="0.01" id="amount" name="amount" required>
+                    <label for="description">Descrição:</label>
+                    <input type="text" id="description" name="description" required>
+                    <label for="expense_type_id">Tipo de Despesa:</label>
+                    <select id="expense_type_id" name="expense_type_id" required>
+                        {% for type in expense_types %}
+                            <option value="{{ type.id }}">{{ type.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Adicionar Despesa</button>
+                </form>
+            </div>
 
-        <div class="section">
-            <h2>Cadastro de Receitas</h2>
-            <form action="/add_revenue" method="POST">
-                <label for="amount">Valor:</label>
-                <input type="number" step="0.01" id="amount" name="amount" required>
-                <label for="description">Descrição:</label>
-                <input type="text" id="description" name="description" required>
-                <label for="revenue_type_id">Tipo de Receita:</label>
-                <select id="revenue_type_id" name="revenue_type_id" required>
-                    {% for type in revenue_types %}
-                        <option value="{{ type.id }}">{{ type.name }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Adicionar Receita</button>
-            </form>
-        </div>
+            <!-- Seção para cadastrar receitas -->
+            <div class="section">
+                <h2>Cadastro de Receitas</h2>
+                <form action="/add_revenue" method="POST">
+                    <label for="amount">Valor:</label>
+                    <input type="number" step="0.01" id="amount" name="amount" required>
+                    <label for="description">Descrição:</label>
+                    <input type="text" id="description" name="description" required>
+                    <label for="revenue_type_id">Tipo de Receita:</label>
+                    <select id="revenue_type_id" name="revenue_type_id" required>
+                        {% for type in revenue_types %}
+                            <option value="{{ type.id }}">{{ type.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Adicionar Receita</button>
+                </form>
+            </div>
 
-        <div class="section">
-            <h2>Cadastro de Tipos de Despesas</h2>
-            <form action="/add_expense_type" method="POST">
-                <label for="name">Nome do Tipo de Despesa:</label>
-                <input type="text" id="name" name="name" required>
-                <button type="submit">Adicionar Tipo de Despesa</button>
-            </form>
-        </div>
+            <!-- Seção para cadastrar tipos de despesas -->
+            <div class="section">
+                <h2>Cadastro de Tipos de Despesas</h2>
+                <form action="/add_expense_type" method="POST">
+                    <label for="name">Nome do Tipo de Despesa:</label>
+                    <input type="text" id="name" name="name" required>
+                    <button type="submit">Adicionar Tipo de Despesa</button>
+                </form>
+            </div>
 
-        <div class="section">
-            <h2>Cadastro de Tipos de Receitas</h2>
-            <form action="/add_revenue_type" method="POST">
-                <label for="name">Nome do Tipo de Receita:</label>
-                <input type="text" id="name" name="name" required>
-                <button type="submit">Adicionar Tipo de Receita</button>
-            </form>
-        </div>
+            <!-- Seção para cadastrar tipos de receitas -->
+            <div class="section">
+                <h2>Cadastro de Tipos de Receitas</h2>
+                <form action="/add_revenue_type" method="POST">
+                    <label for="name">Nome do Tipo de Receita:</label>
+                    <input type="text" id="name" name="name" required>
+                    <button type="submit">Adicionar Tipo de Receita</button>
+                </form>
+            </div>
 
-        <div class="section">
-            <h2>Histórico de Transações</h2>
-            <table>
-                <tr>
-                    <th>Descrição</th>
-                    <th>Tipo</th>
-                    <th>Valor</th>
-                    <th>Data</th>
-                </tr>
-                {% for expense in expenses %}
+            <!-- Seção para exibir o histórico de transações -->
+            <div class="section">
+                <h2>Histórico de Transações</h2>
+                <table>
                     <tr>
-                        <td>{{ expense.description }}</td>
-                        <td>Despesa</td>
-                        <td>{{ expense.amount }}</td>
-                        <td>{{ expense.created_at }}</td>
+                        <th>Descrição</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
+                        <th>Data</th>
                     </tr>
-                {% endfor %}
-                {% for revenue in revenues %}
-                    <tr>
-                        <td>{{ revenue.description }}</td>
-                        <td>Receita</td>
-                        <td>{{ revenue.amount }}</td>
-                        <td>{{ revenue.created_at }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+                    {% for expense in expenses %}
+                        <tr>
+                            <td>{{ expense.description }}</td>
+                            <td>Despesa</td>
+                            <td>{{ expense.amount }}</td>
+                            <td>{{ expense.created_at }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for revenue in revenues %}
+                        <tr>
+                            <td>{{ revenue.description }}</td>
+                            <td>Receita</td>
+                            <td>{{ revenue.amount }}</td>
+                            <td>{{ revenue.created_at }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
-    </div>
-    <footer>
-        <p>&copy; 2024 Ian Braga. Todos os direitos reservados. | Projeto Pessoal Meu_Financeiro</p>
-    </footer>
-    <script src="static/js/script.js"></script>
+        <!-- Rodapé da página -->
+        <footer>
+            <p>&copy; 2024 Ian Braga. Todos os direitos reservados. | Projeto Pessoal Meu_Financeiro</p>
+        </footer>
+        <!-- Script para o arquivo JavaScript -->
+        <script src="static/js/script.js"></script>
     </body>
 </html>
