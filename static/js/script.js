@@ -107,5 +107,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Adiciona o evento de clique ao botão de alternância do modo escuro
-    toggleaddEventListener('click', toggleDarkMode);
+    toggleButton.addEventListener('click', toggleDarkMode);
 });
