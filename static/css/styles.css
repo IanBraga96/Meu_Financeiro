@@ -1,33 +1,48 @@
+/* Estilo do corpo da página */
 body {
+    /* Define a fonte e cor do texto */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    /* Define a cor de fundo */
     background-color: #f0f0f0;
     position: relative;
+    /* Define a altura mínima da página */
     min-height: 100vh;
-    padding-bottom: 50px; /* Altura do rodapé */
+    /* Adiciona um padding de 50px no final da página para o rodapé */
+    padding-bottom: 50px;
     box-sizing: border-box;
 }
 
+/* Estilo do container principal */
 .container {
+    /* Define a largura do container */
     width: 80%;
     margin: 0 auto;
     padding: 20px;
+    /* Define a cor de fundo do container */
     background-color: white;
+    /* Adiciona uma sombra ao container */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Define o raio da borda do container */
     border-radius: 8px;
 }
 
+/* Estilo do cabeçalho */
 .header {
+    /* Define o layout do cabeçalho como flexbox */
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* Define a cor de fundo do cabeçalho */
     background-color: #007BFF;
     color: white;
     padding: 10px;
+    /* Define o raio da borda do cabeçalho */
     border-radius: 8px 8px 0 0;
 }
 
+/* Estilo do título do cabeçalho */
 .header h1 {
     margin: 0;
     text-align: center;
@@ -35,10 +50,12 @@ body {
     align-items: center;
 }
 
+/* Estilo da imagem do cabeçalho */
 .header img {
     margin-right: 10px;
 }
 
+/* Estilo do ícone de configuração */
 .config-icon {
     font-size: 24px;
     color: white;
@@ -62,6 +79,7 @@ body {
     text-decoration: underline;
 }
 
+/* Estilo da seção */
 .section {
     margin-bottom: 20px;
 }
@@ -71,6 +89,7 @@ h2 {
     color: #007BFF;
 }
 
+/* Estilo da tabela */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -90,6 +109,7 @@ th {
     background-color: #f4f4f4;
 }
 
+/* Estilo dos inputs, selects e botões */
 input, select, button {
     width: 100%;
     padding: 8px;
@@ -111,6 +131,7 @@ button:hover {
     background-color: #0056b3;
 }
 
+/* Estilo do gráfico */
 .chart {
     width: 100%;
     max-width: 600px;
@@ -118,7 +139,7 @@ button:hover {
     margin: 0 auto;
 }
 
-/*modo escuro*/
+/* Modo escuro */
 body.dark-mode {
     background-color: #121212;
     color: e0e0e0;
@@ -160,7 +181,6 @@ table.dark-mode, th.dark-mode, td.dark-mode {
 footer.dark-mode {
     background-color: #333;
 }
-
 
 /* Estilo do rodapé */
 footer {
