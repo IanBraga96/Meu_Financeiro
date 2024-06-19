@@ -5,6 +5,8 @@ Este é um aplicativo web bem simples de controle financeiro desenvolvido com Py
 A intenção da criação é de uma necessidade pessoal para organizar os gastos.
 Ainda está em fase de testes e desenvolvimento.
 
+https://ianbraga.pythonanywhere.com/login
+
 
 ## Últimas atualizações:
 
