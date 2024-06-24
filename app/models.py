@@ -1,8 +1,6 @@
 from datetime import datetime
 from . import db
 
-
-
 #Definição de modelos de banco de dados:
 #Define quatro modelos de banco de dados: User, Wallet, Expense, Revenue, ExpenseType,
 #RevenueType, representando usuários, carteiras, despesas, receitas, tipos de despesa
