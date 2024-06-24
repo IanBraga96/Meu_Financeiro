@@ -1,4 +1,5 @@
 # Meu_Financeiro
+# Este é o código da primeira versão do projeto, que está desatualizado. A versão mais recente está em constante atualização no branch ‘develop’.
 
 Este é um aplicativo web bem simples de controle financeiro desenvolvido com Python e Flask. Ele permite que os usuários gerenciem suas finanças, incluindo o registro de despesas, receitas, tipos de despesas e receitas, além de manter um histórico de transações.
 
