@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Financeiro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<div class="header">
+    <h1>
+        <img src="/static/img/wallet.png" alt="" width="64" height="51" />
+        <strong>Meu Financeiro</strong>
+    </h1>
+    <div class="navigation">
+        <a href="{{ url_for('main.dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url_for('main.config') }}" class="nav-link">Configurações</a>
+        <button id="dark-mode-toggle" class="nav-link">Modo Escuro</button>
+    </div>
+</div>
