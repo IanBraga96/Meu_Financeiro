@@ -71,32 +71,28 @@ def dashboard():
 
     total_revenue = db.session.query(db.func.sum(Revenue.amount)).filter(Revenue.user_id == user_id).scalar() or 0
     total_expense = db.session.query(db.func.sum(Expense.amount)).filter(Expense.user_id == user_id).scalar() or 0
-    total_value = total_revenue - total_expense
-    
+
+    # Preparar dados de despesas por tipo
     expense_data = {expense_type.name: 0 for expense_type in expense_types}
-    revenue_data = {revenue_type.name: 0 for revenue_type in revenue_types}
-    
     for expense in Expense.query.filter_by(user_id=user_id).all():
         expense_type = ExpenseType.query.get(expense.expense_type_id)
         expense_data[expense_type.name] += expense.amount
-        
-    for revenue in Revenue.query.filter_by(user_id=user_id).all():
-        revenue_type = RevenueType.query.get(revenue.revenue_type_id)
-        revenue_data[revenue_type.name] += revenue.amount
 
-    labels = list(expense_data.keys()) + list(revenue_data.keys())
-    data = list(expense_data.values()) + list(revenue_data.values())
+    # Preparar os labels e valores para o gráfico
+    labels = list(expense_data.keys())
+    data = list(expense_data.values())
+
+    # Adicionar valor disponível para gastar, se houver
+    if total_revenue > total_expense:
+        labels.append('Disponível para Gasto')
+        data.append(total_revenue - total_expense)
 
     labels_json = json.dumps(labels)
     data_json = json.dumps(data)
 
-    expenses = Expense.query.filter_by(user_id=user_id).all()
-    revenues = Revenue.query.filter_by(user_id=user_id).all()
-    
-    return render_template('dashboard.html', wallet=wallet, total_value=total_value,
+    return render_template('dashboard.html', wallet=wallet, total_revenue=total_revenue,
                            total_expense=total_expense, labels=labels, data=data, expense_types=expense_types,
-                           revenue_types=revenue_types, expenses=expenses, revenues=revenues, user_id=user_id,
-                           labels_json=labels_json, data_json=data_json)
+                           revenue_types=revenue_types, labels_json=labels_json, data_json=data_json)
 
 @main.route('/add_wallet', methods=['POST'])
 def add_wallet():
