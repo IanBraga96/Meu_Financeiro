@@ -17,6 +17,7 @@ Você pode encontrar mais detalhes sobre cada versão nas respectivas branches d
 ---
 ### Disponivel para teste
 Acesse o aplicativo [aqui](https://ianbraga.pythonanywhere.com/login).
+Caso não queira criar um usuario utilize para o Login: usuario | Senha: usuario
 
 ---
 ## Últimas atualizações:
