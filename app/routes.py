@@ -11,7 +11,7 @@ def index():
 
 @main.route('/register', methods=['GET', 'POST'])
 def register():
-    from .models import User
+    from .models import User, ExpenseType, RevenueType
     if request.method == 'POST':
         fullname = request.form.get('fullname')
         username = request.form.get('username')
@@ -30,6 +30,23 @@ def register():
         try:
             db.session.add(new_user)
             db.session.commit()
+
+            expense_types = [
+                ExpenseType(name='Alimentação', user_id=new_user.id),
+                ExpenseType(name='Diversão', user_id=new_user.id),
+                ExpenseType(name='Transporte', user_id=new_user.id),
+                ExpenseType(name='Moradia', user_id=new_user.id)
+            ]
+            db.session.add_all(expense_types)
+            db.session.commit()
+
+            revenue_types = [
+                RevenueType(name='Salario', user_id=new_user.id)
+            ]
+            db.session.add_all(revenue_types)
+            db.session.commit()
+            
+            
             flash('Registrado com sucesso! Faça login.', 'success')
             return redirect(url_for('main.login'))
         except Exception as e:
