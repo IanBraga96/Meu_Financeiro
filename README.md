@@ -3,41 +3,46 @@
 Este é um aplicativo web bem simples de controle financeiro desenvolvido com Python e Flask. Ele permite que os usuários gerenciem suas finanças, incluindo o registro de despesas, receitas, tipos de despesas e receitas, além de manter um histórico de transações.
 
 A intenção da criação é de uma necessidade pessoal para organizar os gastos.
-Ainda está em fase de testes e desenvolvimento.
+Continua em fase de testes e desenvolvimento.
 
-https://ianbraga.pythonanywhere.com/login
+---
+**Atualizações de Código:**
 
+Recentemente, criei um novo branch para o projeto no GitHub:
+- O branch antigo foi renomeado para `master` e contém a primeira versão do meu projeto.
+- Um novo branch `develop` foi criado para continuar o desenvolvimento e postar novas atualizações.
 
+Você pode encontrar mais detalhes sobre cada versão nas respectivas branches do GitHub.
+
+---
+### Disponivel para teste
+Acesse o aplicativo [aqui](https://ianbraga.pythonanywhere.com/login).
+
+---
 ## Últimas atualizações:
 
-- Identifiquei um problema no banco de dados em que as informações não estavam sendo separadas por usuário. As correções necessárias e o problema foi resolvido.
-- Gráficos de Despesas - Implementar gráficos para visualização das despesas ao longo do tempo.
-- Adicionado página de configuração, onde será possível alterar dados cadastrais e tipos de despesas e receitas.
-- Adicionado opção para excluir valores de despesas e receitas.
-- Alterações na página de configuração. (Adicionado campo para exclusão de valores de despesas/receitas e adicionado botão de voltar).
-- Modificações nas páginas, adicionado rodapé.
-- Separando html do css e javascript.
-- Modificações nas páginas, adicionado cabeçalho.
-- Adicionado modo escuro.
+- Correção no banco de dados para separação correta das informações por usuário.
+- Implementação de gráficos para visualização de despesas ao longo do tempo.
+- Adição de página de configuração para alteração de dados cadastrais e tipos de despesas/receitas.
+- Melhorias nas páginas com adição de cabeçalho e rodapé.
+- Implementação de modo escuro.
+- Remodelação completa da estrutura do projeto para facilitar manutenção.
 
+---
 ## Próximas atualizações
 
 - Remodelação da Dashboard - Melhorar a experiência de uso da dashboard, tornando-a mais intuitiva e amigável.
 - Adicionar reCAPTCHA no login
-- Gráficos de Despesas - Implementar gráficos para visualização das despesas ao longo do tempo ✅
-- Disponibilização Online - Hospedar o aplicativo online para uso externo, Garantir que seja responsivo e funcione bem em smartphones e tablets.
 
+---
 ## Funcionalidades
 
-- Registro de Usuário
-- Login de Usuário
-- Gerenciamento de Carteira Financeira
-- Cadastro de Despesas
-- Cadastro de Receitas
-- Cadastro de Tipos de Despesas
-- Cadastro de Tipos de Receitas
-- Visualização do Histórico de Transações
+- Registro e login de usuário.
+- Gerenciamento de carteira financeira com visualização de gráficos de receitas/despesas.
+- Cadastro e exclusão de despesas, receitas, tipos de despesas e tipos de receitas.
+- Visualização do histórico de transações.
 
+---
 ## Tecnologias Utilizadas
 
 - Python
@@ -46,7 +51,9 @@ https://ianbraga.pythonanywhere.com/login
 - Werkzeug
 - HTML/CSS
 - SQLite
+- JavaScript
 
+---
 ## Instalação
 
 ### Pré-requisitos
@@ -80,6 +87,7 @@ https://ianbraga.pythonanywhere.com/login
 
 5. Abra o navegador e acesse `http://127.0.0.1:5000`.
 
+---
 ## Uso
 
 ### Registro de Usuário
@@ -103,15 +111,23 @@ Após o login, você será redirecionado para o painel de controle, onde poderá
 - Cadastrar novos tipos de despesas e receitas.
 - Visualizar o histórico de transações.
 
+### Configurações
+
+Na página de configuração, você pode:
+
+- Alterar dados de login
+- Excluir despesas, receitas, tipos de despesas e tipos de receitas.
+
+---
 ## Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
 
-
+---
 ## Contato
 
 - **Nome:** Ian Braga
 - **E-mail:** contatoianbraga@gmail.com
-- **GitHub:** https://github.com/IanBraga96
+- **GitHub:** <https://github.com/IanBraga96>
 
 
