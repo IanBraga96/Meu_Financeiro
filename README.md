@@ -22,7 +22,7 @@ Acesse o aplicativo [aqui](https://ianbraga.pythonanywhere.com/login).
 ## Últimas atualizações:
 
 - Correção no banco de dados para separação correta das informações por usuário.
-- Implementação de gráficos para visualização de despesas ao longo do tempo.
+- Implementação de gráficos para visualização de despesas ao longo do tempo. Posteriormente alterei o gráfico para o tipo doughnut.
 - Adição de página de configuração para alteração de dados cadastrais e tipos de despesas/receitas.
 - Melhorias nas páginas com adição de cabeçalho e rodapé.
 - Implementação de modo escuro.
