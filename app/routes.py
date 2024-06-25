@@ -69,6 +69,9 @@ def dashboard():
     expense_types = ExpenseType.query.filter_by(user_id=user_id).all()
     revenue_types = RevenueType.query.filter_by(user_id=user_id).all()
 
+    expenses = Expense.query.filter_by(user_id=user_id).all()
+    revenues = Revenue.query.filter_by(user_id=user_id).all()
+
     total_revenue = db.session.query(db.func.sum(Revenue.amount)).filter(Revenue.user_id == user_id).scalar() or 0
     total_expense = db.session.query(db.func.sum(Expense.amount)).filter(Expense.user_id == user_id).scalar() or 0
 
@@ -92,7 +95,8 @@ def dashboard():
 
     return render_template('dashboard.html', wallet=wallet, total_revenue=total_revenue,
                            total_expense=total_expense, labels=labels, data=data, expense_types=expense_types,
-                           revenue_types=revenue_types, labels_json=labels_json, data_json=data_json)
+                           revenue_types=revenue_types, labels_json=labels_json, data_json=data_json, expenses=expenses, revenues=revenues)
+
 
 @main.route('/add_wallet', methods=['POST'])
 def add_wallet():
