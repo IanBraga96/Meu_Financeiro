@@ -1,48 +1,42 @@
 /* Estilo do corpo da página */
 body {
-    /* Define a fonte e cor do texto */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    /* Define a cor de fundo */
     background-color: #f0f0f0;
     position: relative;
-    /* Define a altura mínima da página */
     min-height: 100vh;
-    /* Adiciona um padding de 50px no final da página para o rodapé */
     padding-bottom: 50px;
     box-sizing: border-box;
 }
 
 /* Estilo do container principal */
 .container {
-    /* Define a largura do container */
-    width: 80%;
+    width: 90%;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    /* Define a cor de fundo do container */
     background-color: white;
-    /* Adiciona uma sombra ao container */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    /* Define o raio da borda do container */
     border-radius: 8px;
 }
 
 /* Estilo do cabeçalho */
 .header {
-    /* Define o layout do cabeçalho como flexbox */
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    /* Define a cor de fundo do cabeçalho */
     background-color: #007BFF;
     color: white;
     padding: 10px;
-    /* Define o raio da borda do cabeçalho */
     border-radius: 8px 8px 0 0;
+    text-align: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto 0;
 }
 
-/* Estilo do título do cabeçalho */
 .header h1 {
     margin: 0;
     text-align: center;
@@ -50,33 +44,47 @@ body {
     align-items: center;
 }
 
-/* Estilo da imagem do cabeçalho */
 .header img {
     margin-right: 10px;
 }
 
-/* Estilo do ícone de configuração */
-.config-icon {
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-}
-
-/* Estilos de Navegação */
+/* Navegação */
 .navigation {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    margin-top: 10px;
 }
 
 .nav-link {
     color: white;
-    margin-left: 20px;
+    margin: 20px 0;
     text-decoration: none;
     font-size: 18px;
 }
 
 .nav-link:hover {
     text-decoration: underline;
+}
+
+/* Ajustes responsivos */
+@media (min-width: 600px) {
+    .header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .navigation {
+        flex-direction: row;
+        margin-top: 0;
+    }
+
+    .nav-link {
+        margin-left: 20px;
+        margin: 0 10px;
+    }
 }
 
 /* Estilo da seção */
@@ -142,8 +150,9 @@ button:hover {
 /* Modo escuro */
 body.dark-mode {
     background-color: #121212;
-    color: e0e0e0;
+    color: #e0e0e0;
 }
+
 .container.dark-mode {
     background-color: #1e1e1e;
     color: #e0e0e0;
@@ -182,15 +191,20 @@ footer.dark-mode {
     background-color: #333;
 }
 
-/* Estilo do rodapé */
 footer {
-    background-color: #0056b3;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #007BFF;
     color: white;
     text-align: center;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    padding: 10px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 0 0 8px 8px;
+
 }
 
 /* Estilos específicos para login e registro */
@@ -200,10 +214,7 @@ footer {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 50px auto;
 }
 
 .login-container h2, .register-container h2 {
