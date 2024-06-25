@@ -7,38 +7,34 @@ if (chartElement) {
     // Obtém o 2D do elemento do gráfico
     const ctx = chartElement.getContext('2d');
 
-    // Cria um novo gráfico do tipo barra com os dados
+    // Cria um novo gráfico do tipo rosca com os dados
     const expenseRevenueChart = new Chart(ctx, {
-        // Tipo de gráfico: barra
-        type: 'bar',
+        // Tipo de gráfico: rosca
+        type: 'doughnut',
         data: {
-            // Rótulos para os eixos x
+            // Rótulos para os segmentos
             labels: labels,
             // Conjunto de dados para o gráfico
             datasets: [{
-                // Legenda para o conjunto de dados
-                label: 'Despesas e Receitas',
                 // Dados para o gráfico
                 data: data,
-                // Cores de fundo para as barras
+                // Cores de fundo para os segmentos
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
                     'rgba(255, 206, 86, 0.2)',
                     'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(153, 102, 255, 0.2)'
                 ],
-                // Cores de borda para as barras
+                // Cores de borda para os segmentos
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    'rgba(153, 102, 255, 1)'
                 ],
-                // Largura da borda das barras
+                // Largura da borda dos segmentos
                 borderWidth: 1
             }]
         },
@@ -53,10 +49,21 @@ if (chartElement) {
                 // Configuração do título
                 title: {
                     display: true,
-                    text: 'Tipos de Despesas e Receitas'
+                    text: 'Proporção de Receitas e Tipos de Despesas'
+                },
+                // Configuração de tooltip para mostrar porcentagens e valores
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const total = data.reduce((acc, value) => acc + value, 0);
+                            const value = tooltipItem.raw;
+                            const percentage = ((value / total) * 100).toFixed(2);
+                            return `${tooltipItem.label}: R$${value} (${percentage}%)`;
+                        }
+                    }
                 }
             }
-        },
+        }
     });
 }
 
